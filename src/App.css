@@ -1,0 +1,32 @@
+/* Layout and parallax styles */
+.site-header{
+  position:sticky;top:0;background:rgba(3,7,18,0.6);backdrop-filter:blur(6px);z-index:50;border-bottom:1px solid rgba(255,255,255,0.03)
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+.brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
+.site-header nav a{color:var(--muted);margin-left:1rem;text-decoration:none}
+.site-header nav a:hover{color:#fff}
+
+.parallax-hero{position:relative;height:60vh;min-height:420px;overflow:hidden}
+.parallax-layer{position:absolute;inset:0;background-repeat:no-repeat;background-size:cover;background-position:center}
+.parallax-layer.bg-layer{background-image:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.6)),url('/src/assets/hero.png');transform:translateZ(0)}
+.parallax-layer.mid-layer{display:flex;align-items:center}
+.hero-inner{padding:4rem 0;color:#fff;text-align:center}
+.hero-inner h1{font-size:clamp(2rem,4vw,3.2rem);margin-bottom:0.5rem}
+.hero-inner p{color:var(--muted);margin-bottom:1rem}
+
+.features .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.25rem}
+.card{background:rgba(255,255,255,0.02);padding:1.2rem;border-radius:8px}
+
+.upload-box{border:1px dashed rgba(255,255,255,0.06);padding:2rem;border-radius:8px;text-align:center}
+
+@media (max-width:900px){
+  .features .feature-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .features .feature-grid{grid-template-columns:1fr}
+  .parallax-hero{height:48vh}
+}
+
+/* Simple parallax effect for desktop via transform on scroll (JS optional) */
+/* If you prefer pure CSS, use background-attachment: fixed for large screens */
