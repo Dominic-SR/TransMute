@@ -1,15 +1,23 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
-    <header className="site-header">
-      <div className="container nav-inner">
-        <Link to="/" className="brand">TransMute</Link>
-        <nav>
-          <Link to="/convert">Convert</Link>
-          <Link to="/docs">Docs</Link>
-          <Link to="/about">About</Link>
+    <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/85 backdrop-blur-lg">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+        <Link to="/" className="text-lg font-semibold tracking-tight text-cyan-300">
+          TransMute
+        </Link>
+
+        <nav className="flex flex-wrap items-center gap-4 text-sm text-slate-200">
+          <Link to="/convert" className="transition hover:text-cyan-300">
+            Convert
+          </Link>
+          <Link to="/docs" className="transition hover:text-cyan-300">
+            Docs
+          </Link>
+          <Link to="/about" className="transition hover:text-cyan-300">
+            About
+          </Link>
         </nav>
       </div>
     </header>
