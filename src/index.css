@@ -32,11 +32,25 @@ body {
   color: #ffffff;
 }
 
+body {
+  background:
+    radial-gradient(circle at top, rgba(8, 145, 178, 0.12), transparent 28%),
+    radial-gradient(circle at bottom, rgba(109, 40, 217, 0.16), transparent 30%),
+    #020617;
+}
+
 .hero-bg {
   background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.95)), url('/src/assets/hero.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.glass-panel {
+  background: rgba(2, 6, 23, 0.72);
+  border: 1px solid rgba(14, 116, 144, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 80px -45px rgba(14, 116, 144, 0.65);
 }
 
 @media (min-width: 768px) {
