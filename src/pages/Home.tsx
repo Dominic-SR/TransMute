@@ -3,8 +3,8 @@ import ParallaxHero from '../components/ParallaxHero'
 const Home = () => {
   return (
     <div className="space-y-20">
-      <ParallaxHero />
-      <section className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+      {/* <ParallaxHero /> */}
+      {/* <section className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="rounded-4xl border border-slate-700/80 bg-slate-950/75 p-8 shadow-[0_30px_90px_-48px_rgba(14,116,144,0.6)] backdrop-blur-xl">
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/75">Streamlined design</p>
@@ -28,7 +28,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }
