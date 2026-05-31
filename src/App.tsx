@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
+import { About, Convert, Docs, Home } from './pages'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -10,6 +10,9 @@ function App() {
         <main className="pb-16">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/convert" element={<Convert />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
       </div>
