@@ -1,16 +1,12 @@
 const Docs = () => {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20 text-slate-100 sm:px-8">
-      <div className="rounded-3xl border border-slate-700/80 bg-slate-950/80 p-10 shadow-2xl shadow-slate-950/20">
-        <h1 className="text-4xl font-semibold text-white">Docs</h1>
-        <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">
-          Explore the TransMute design system, API guidelines, and conversion workflow documentation.
+    <section className="mx-auto max-w-7xl px-6 py-24 text-slate-100 sm:px-8 lg:px-10">
+      <div className="rounded-4xl border border-slate-700/80 bg-slate-950/80 p-12 shadow-[0_30px_90px_-45px_rgba(14,116,144,0.55)] backdrop-blur-xl">
+        <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/80">Docs</p>
+        <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">A calm design language for every section.</h1>
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
+          This page is intentionally minimal so the new gradient parallax styling is the focus across the app.
         </p>
-        <ul className="mt-8 space-y-4 text-slate-300">
-          <li className="rounded-2xl border border-slate-800/70 bg-slate-900/80 p-5">Getting started with conversion rules</li>
-          <li className="rounded-2xl border border-slate-800/70 bg-slate-900/80 p-5">Supported formats and export profiles</li>
-          <li className="rounded-2xl border border-slate-800/70 bg-slate-900/80 p-5">Best practices for audio quality</li>
-        </ul>
       </div>
     </section>
   )

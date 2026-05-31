@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const heroMetrics = [
-  { label: 'Parallax layers', value: '06', detail: 'Depth-aware scenes' },
-  { label: 'Responsive cards', value: '24', detail: 'Adaptive breakpoints' },
-  { label: 'Dynamic assets', value: '100%', detail: 'Theme-ready media' },
+const heroHighlights = [
+  { label: 'Soft gradients', value: 'Fluid', description: 'Seamless color transitions across every layer.' },
+  { label: 'Layered motion', value: 'Depth', description: 'Scroll-driven parallax elements that feel alive.' },
+  { label: 'Clean spacing', value: 'Modern', description: 'Airy layout for focused content and visual rhythm.' },
 ]
 
 export default function ParallaxHero() {
@@ -27,80 +27,67 @@ export default function ParallaxHero() {
     }
   }, [])
 
-  const layerTransforms = useMemo(() => ({
-    base: `translate3d(0, ${scrollY * 0.18}px, 0)`,
-    mid: `translate3d(0, ${scrollY * 0.28}px, 0)`,
-    front: `translate3d(0, ${scrollY * 0.36}px, 0)`,
-  }), [scrollY])
+  const transforms = useMemo(
+    () => ({
+      slow: `translate3d(0, ${scrollY * 0.08}px, 0)`,
+      mid: `translate3d(0, ${scrollY * 0.16}px, 0)`,
+      fast: `translate3d(0, ${scrollY * 0.24}px, 0)`,
+    }),
+    [scrollY],
+  )
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden pb-20">
+      <div className="absolute inset-0 bg-slate-950/95" />
       <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(2,6,23,0.2), rgba(2,6,23,0.88)), url('/src/assets/hero.png')`,
-          transform: layerTransforms.base,
-          backgroundAttachment: 'fixed',
-        }}
+        className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl md:left-14 md:top-24"
+        style={{ transform: transforms.slow }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.25),transparent_30%),radial-gradient(circle_at_bottom,rgba(76,29,149,0.3),transparent_35%)]" />
       <div
-        className="absolute inset-0 opacity-80"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(14,116,144,0.32), transparent 22%), radial-gradient(circle at 80% 10%, rgba(168,85,247,0.34), transparent 24%), radial-gradient(circle at 50% 80%, rgba(8,145,178,0.24), transparent 26%)',
-          transform: layerTransforms.mid,
-          filter: 'blur(0.2px)',
-        }}
+        className="absolute -right-20 top-44 h-96 w-96 rounded-full bg-violet-500/15 blur-3xl lg:right-16 lg:top-32"
+        style={{ transform: transforms.mid }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/90" />
+      <div
+        className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl"
+        style={{ transform: transforms.fast }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.2),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(168,85,247,0.16),transparent_26%)]" />
 
-      <div className="absolute left-6 top-24 hidden h-24 w-24 rounded-full border border-cyan-300/40 bg-cyan-300/10 blur-2xl md:block" style={{ transform: `translate3d(0, ${scrollY * 0.22}px, 0)` }} />
-      <div className="absolute right-10 top-28 hidden h-32 w-32 rounded-full border border-violet-300/30 bg-violet-500/10 blur-3xl lg:block" style={{ transform: `translate3d(0, ${scrollY * 0.14}px, 0)` }} />
-
-      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-        <div className="mx-auto max-w-5xl text-center">
-          <div className="inline-flex items-center rounded-full border border-cyan-300/30 bg-slate-950/55 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-cyan-200 backdrop-blur">
-            Responsive parallax theme studio
-          </div>
-
-          <h1 className="mt-8 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Dynamic assets, responsive storytelling, and immersive web motion.
+      <div className="relative mx-auto max-w-7xl px-6 pt-24 sm:px-8 lg:px-10 lg:pt-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-sm uppercase tracking-[0.34em] text-cyan-300/80">Gradient Parallax</p>
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            A softer visual experience with layered gradient motion.
           </h1>
-
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-200/85 sm:text-lg">
-            Launch elegant landing pages with layered depth, adaptive visual treatments, and polished conversion flows tuned for modern product websites.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            A clean, modern landing page where color, depth, and spacing work together to create calm focus.
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               to="/convert"
-              className="inline-flex rounded-full bg-cyan-300 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_20px_80px_-28px_rgba(34,211,238,0.9)] transition hover:bg-cyan-200"
+              className="inline-flex rounded-full bg-cyan-300 px-7 py-3.5 text-sm font-semibold text-slate-950 shadow-[0_24px_80px_-32px_rgba(34,211,238,0.75)] transition hover:bg-cyan-200"
             >
-              Start the experience
+              Launch app
             </Link>
             <Link
               to="/docs"
-              className="inline-flex rounded-full border border-slate-200/20 bg-slate-950/55 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur transition hover:border-cyan-200/60 hover:text-white"
+              className="inline-flex rounded-full border border-slate-200/20 bg-slate-950/60 px-7 py-3.5 text-sm font-medium text-slate-100 backdrop-blur transition hover:border-cyan-200/60 hover:text-white"
             >
-              View design system
+              Browse features
             </Link>
           </div>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-3" style={{ transform: layerTransforms.front }}>
-          {heroMetrics.map((metric) => (
+        <div className="mt-16 grid gap-5 sm:grid-cols-3" style={{ transform: transforms.fast }}>
+          {heroHighlights.map((item) => (
             <div
-              key={metric.label}
-              className="rounded-3xl border border-white/10 bg-slate-950/65 p-5 text-left shadow-[0_30px_90px_-50px_rgba(34,211,238,0.65)] backdrop-blur"
+              key={item.label}
+              className="rounded-3xl border border-white/10 bg-slate-950/70 p-6 text-left shadow-[0_30px_90px_-50px_rgba(34,211,238,0.5)] backdrop-blur"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-cyan-200/80">{metric.label}</p>
-                  <p className="mt-3 text-3xl font-semibold text-white">{metric.value}</p>
-                </div>
-                <span className="mt-1 rounded-full bg-cyan-300/15 px-2.5 py-1 text-[10px] font-semibold text-cyan-100">Live</span>
-              </div>
-              <p className="mt-3 text-sm text-slate-300">{metric.detail}</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-cyan-200/80">{item.label}</p>
+              <p className="mt-4 text-3xl font-semibold text-white">{item.value}</p>
+              <p className="mt-3 text-sm leading-6 text-slate-300">{item.description}</p>
             </div>
           ))}
         </div>

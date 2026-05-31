@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-slate-950 text-slate-100">
         <Navbar />
-        <main className="pb-16">
+        <main className="pb-24">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/convert" element={<Convert />} />
