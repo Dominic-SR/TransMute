@@ -1,11 +1,38 @@
+:root {
+  color-scheme: dark;
+  --bg: #020617;
+  --surface: rgba(15, 23, 42, 0.86);
+  --text: #f8fafc;
+  --muted: rgba(203, 213, 225, 0.8);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #22d3ee;
+  --header-bg: rgba(3, 7, 18, 0.6);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.88);
+  --text: #0f172a;
+  --muted: rgba(71, 85, 105, 0.78);
+  --border: rgba(15, 23, 42, 0.12);
+  --accent: #0ea5e9;
+  --header-bg: rgba(255, 255, 255, 0.82);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
 /* Layout and parallax styles */
 .site-header{
-  position:sticky;top:0;background:rgba(3,7,18,0.6);backdrop-filter:blur(6px);z-index:50;border-bottom:1px solid rgba(255,255,255,0.03)
+  position:sticky;top:0;background:var(--header-bg);backdrop-filter:blur(6px);z-index:50;border-bottom:1px solid var(--border)
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
 .brand{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
 .site-header nav a{color:var(--muted);margin-left:1rem;text-decoration:none}
-.site-header nav a:hover{color:#fff}
+.site-header nav a:hover{color:var(--text)}
 
 .parallax-hero{position:relative;height:60vh;min-height:420px;overflow:hidden}
 .parallax-layer{position:absolute;inset:0;background-repeat:no-repeat;background-size:cover;background-position:center}

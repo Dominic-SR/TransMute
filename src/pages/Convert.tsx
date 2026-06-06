@@ -1,15 +1,11 @@
-const Convert = () => {
+export default function Convert() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24 text-slate-100 sm:px-8 lg:px-10">
-      <div className="rounded-4xl border border-slate-700/80 bg-slate-950/80 p-12 shadow-[0_30px_90px_-45px_rgba(14,116,144,0.55)] backdrop-blur-xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/80">Convert</p>
-        <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Gradient conversion for modern media.</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-          Clean, calm content blocks and soft interface elements bring cohesion to every conversion step.
-        </p>
-      </div>
+    <section className="rounded-3xl border border-white/10 bg-slate-950/80 p-10 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+      <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/80">Convert</p>
+      <h1 className="mt-4 text-3xl font-semibold text-white">Convert page</h1>
+      <p className="mt-4 text-slate-300 leading-7">
+        Build your workflow here with simple conversion tools and clear UI sections.
+      </p>
     </section>
   )
 }
-
-export default Convert
