@@ -26,6 +26,7 @@ Convert, compress, merge, and edit your files in seconds. 100% free, completely 
               }}
             >
               <span className="text-cyan-300 font-semibold text-lg">{num}</span>
+              <i>Icon</i>
             </div>
           ))}
         </div>
