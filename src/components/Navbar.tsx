@@ -13,7 +13,7 @@ export default function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'ligh
 
   return (
     <header className="site-header">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-8 lg:px-10">
+      <div className="flex items-center justify-between px-6 py-4 sm:px-8 lg:px-10">
         <NavLink to="/" className="flex items-center gap-3 text-[var(--text)]">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/15 text-lg font-semibold text-cyan-300">
             TM

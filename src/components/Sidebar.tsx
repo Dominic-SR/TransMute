@@ -10,7 +10,7 @@ const links = [
 export default function Sidebar() {
   return (
     <aside className="hidden w-full max-w-[260px] shrink-0 lg:block">
-      <div className="sticky top-24 space-y-4 rounded-3xl border border-white/10 bg-slate-950/80 p-5 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      <div className="sticky top-24 h-full space-y-4 rounded-3xl border border-white/10 bg-slate-950/80 p-5 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         <p className="text-sm uppercase tracking-[0.28em] text-cyan-300/80">Quick links</p>
         <nav className="space-y-2">
           {links.map((link) => (

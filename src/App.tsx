@@ -32,8 +32,8 @@ function App() {
       <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
         <Navbar theme={theme} onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))} />
 
-        <div className="flex h-100 flex-col gap-6 px-4 py-6 sm:px-6 lg:flex-row lg:px-8">
-          <Sidebar />
+        <div className="flex flex-col gap-6 px-4 py-6 sm:px-6 lg:flex-row lg:px-8">
+          {/* <Sidebar /> */}
 
           <main className="flex-1 rounded-[2rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[0_35px_120px_-50px_rgba(0,0,0,0.55)] backdrop-blur-xl lg:p-8">
             <Routes>
