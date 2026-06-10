@@ -1,4 +1,4 @@
-export default function Home() {
+const Home = () =>{
   // Generate 25 boxes for 5x5 grid
   const boxes = Array.from({ length: 25 }, (_, i) => i + 1)
 
@@ -34,3 +34,5 @@ Convert, compress, merge, and edit your files in seconds. 100% free, completely 
     </section>
   )
 }
+
+export default Home;
