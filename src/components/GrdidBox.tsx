@@ -11,8 +11,10 @@ const GrdidBox = ({ num }: { num: number }) => {
                 maxWidth: '250px', // Maximum width for very large screens
               }}
             >
+              <div className="svg-section">
               <FaFilePdf />
               <FaFileImage />
+              </div>
 
             </div>
   )
