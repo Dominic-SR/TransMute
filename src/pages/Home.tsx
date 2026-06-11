@@ -17,9 +17,9 @@ Convert, compress, merge, and edit your files in seconds. 100% free, completely 
       <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.6)] backdrop-blur-xl">
         <h2 className="text-2xl font-semibold text-white mb-6 text-center">Explore All Tools</h2>
         <div className="flex flex-wrap gap-5 justify-center">
-         
-            <GrdidBox  data={ToolsList} />
-          
+         {ToolsList.map((tool) => (
+            <GrdidBox  data={tool} />
+          ))}
         </div>
       </div>
     </section>

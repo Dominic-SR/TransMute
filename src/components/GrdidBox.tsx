@@ -2,6 +2,7 @@ import React from 'react'
 import { FaFilePdf } from "react-icons/fa";
 import { FaFileImage } from "react-icons/fa6";
 const GrdidBox = ({ data }: { data: any }) => {
+  console.log(data)
   return (
     <div key={data.id}
               className="aspect-square bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-300/30 rounded-2xl flex items-center justify-center hover:border-cyan-300/60 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
@@ -16,7 +17,7 @@ const GrdidBox = ({ data }: { data: any }) => {
               <FaFilePdf />
               <FaFileImage />
               </div>
-              <p>{data.tool}</p>
+              <p>{data?.tool}</p>
               </div>
             </div>
   )
