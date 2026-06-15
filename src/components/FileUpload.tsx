@@ -12,6 +12,7 @@ interface UploadedFile {
 export default function FileUpload() {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [targetFormat, setTargetFormat] = useState<'png' | 'jpeg'>('png');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const formatFileSize = (bytes: number): string => {
@@ -20,6 +21,73 @@ export default function FileUpload() {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const isJpegFile = (file: File) =>
+    file.type === 'image/jpeg' || /\.(jpe?g)$/i.test(file.name);
+
+  const isPngFile = (file: File) =>
+    file.type === 'image/png' || /\.png$/i.test(file.name);
+
+  const convertImageFormat = async (
+    file: File,
+    format: 'png' | 'jpeg'
+  ): Promise<File> => {
+    const shouldConvertToPng = format === 'png' && isJpegFile(file);
+    const shouldConvertToJpeg = format === 'jpeg' && isPngFile(file);
+
+    if (!shouldConvertToPng && !shouldConvertToJpeg) {
+      return file;
+    }
+
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+        } else {
+          reject(new Error('Unable to read image file'));
+        }
+      };
+      reader.onerror = () => reject(reader.error ?? new Error('File reading failed'));
+      reader.readAsDataURL(file);
+    });
+
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Unable to load image for conversion'));
+      img.src = dataUrl;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext('2d');
+    if (!context) {
+      throw new Error('Canvas is not supported');
+    }
+    context.drawImage(image, 0, 0, image.width, image.height);
+
+    const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
+    const extension = format === 'png' ? '.png' : '.jpg';
+
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(new Error('Image conversion failed'));
+          }
+        },
+        mimeType,
+        format === 'jpeg' ? 0.92 : undefined
+      );
+    });
+
+    const outputName = file.name.replace(/\.(jpe?g|png)$/i, extension);
+    return new File([blob], outputName, { type: mimeType });
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -43,16 +111,38 @@ export default function FileUpload() {
     processFiles(selectedFiles);
   };
 
-  const processFiles = (newFiles: File[]) => {
-    const uploadedFiles: UploadedFile[] = newFiles.map((file) => ({
-      id: `${file.name}-${Date.now()}-${Math.random()}`,
-      file,
-      progress: 0,
-      status: 'pending',
-    }));
+  const processFiles = async (newFiles: File[]) => {
+    const convertedFiles = await Promise.all(
+      newFiles.map(async (file) => {
+        try {
+          return await convertImageFormat(file, targetFormat);
+        } catch (error) {
+          setFiles((prev) => [
+            ...prev,
+            {
+              id: `${file.name}-${Date.now()}-${Math.random()}`,
+              file,
+              progress: 0,
+              status: 'error',
+              error: 'Image conversion failed',
+            },
+          ]);
+          return null;
+        }
+      })
+    );
+
+    const uploadedFiles: UploadedFile[] = convertedFiles
+      .filter((file): file is File => file !== null)
+      .map((file) => ({
+        id: `${file.name}-${Date.now()}-${Math.random()}`,
+        file,
+        progress: 0,
+        status: 'pending',
+      }));
 
     setFiles((prev) => [...prev, ...uploadedFiles]);
-    
+
     // Simulate upload for each file
     uploadedFiles.forEach((uploadedFile) => {
       simulateUpload(uploadedFile.id);
@@ -110,6 +200,32 @@ export default function FileUpload() {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Drag and Drop Area */}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <span className="text-sm text-slate-300">Convert images to:</span>
+        <button
+          type="button"
+          onClick={() => setTargetFormat('png')}
+          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+            targetFormat === 'png'
+              ? 'bg-cyan-500 text-slate-950'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+          }`}
+        >
+          PNG
+        </button>
+        <button
+          type="button"
+          onClick={() => setTargetFormat('jpeg')}
+          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+            targetFormat === 'jpeg'
+              ? 'bg-cyan-500 text-slate-950'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+          }`}
+        >
+          JPG
+        </button>
+      </div>
+
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}

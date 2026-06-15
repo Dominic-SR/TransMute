@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
 import Home from './pages/Home'
 import Convert from './pages/Convert'
 import Docs from './pages/Docs'

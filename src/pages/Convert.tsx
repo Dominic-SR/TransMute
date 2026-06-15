@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 const Convert = () => {
   const { state } = useLocation();
   console.log(state);
+
+  
   return (
     <section className="rounded-3xl border border-white/10 bg-slate-950/80 p-10 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.6)] backdrop-blur-xl">
       <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/80">Convert</p>
