@@ -1,9 +1,10 @@
-// import jbg from "../assets/jpg.png";
-// import png from "../Images/png.png";
+import jbg from "../Images/jpg.png";
+import png from "../Images/png.png";
 const ToolsList = [
   {
     id: 1,
     tool: "JPG to PNG",
+    method: "jpg-to-png",
     description: "Convert your JPG files to PNG format in seconds.",
     image1: jbg,
     image2: png,
