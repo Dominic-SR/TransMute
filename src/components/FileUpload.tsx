@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { FiUploadCloud, FiX, FiCheck } from 'react-icons/fi';
 import { formatFileSize } from '../utilities/FileHelper';
+import {isJpegFile, isPngFile} from '../utilities/CheckFileType';
 
 interface UploadedFile {
   id: string;
@@ -19,12 +20,6 @@ export default function FileUpload() {
   const getFormatFileSize = (bytes: number) => {
     return formatFileSize(bytes);
   };
-
-  const isJpegFile = (file: File) =>
-    file.type === 'image/jpeg' || /\.(jpe?g)$/i.test(file.name);
-
-  const isPngFile = (file: File) =>
-    file.type === 'image/png' || /\.png$/i.test(file.name);
 
   const convertImageFormat = async (
     file: File,
