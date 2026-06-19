@@ -21,6 +21,16 @@ export default function FileUpload() {
     return formatFileSize(bytes);
   };
 
+
+  const checkFileTypes = (file: File, format: 'jpeg' | 'png') => {
+    const shouldConvertToPng = format === 'png' && isJpegFile(file);
+    const shouldConvertToJpeg = format === 'jpeg' && isPngFile(file);
+
+    if (!shouldConvertToPng && !shouldConvertToJpeg) {
+      return file;
+    }
+}
+
   const convertImageFormat = async (
     file: File,
     format: 'png' | 'jpeg'
@@ -107,7 +117,7 @@ export default function FileUpload() {
     const convertedFiles = await Promise.all(
       newFiles.map(async (file) => {
         try {
-          return await convertImageFormat(file, targetFormat);
+          return await checkFileTypes(file, targetFormat);
         } catch (error) {
           setFiles((prev) => [
             ...prev,
