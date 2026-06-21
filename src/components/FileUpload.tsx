@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import { FiUploadCloud, FiX, FiCheck } from 'react-icons/fi';
 import { formatFileSize } from '../utilities/FileHelper';
-import {isJpegFile, isPngFile} from '../utilities/CheckFileType';
+import {isJpegFile, isPngFile, isValidForConversion} from '../utilities/CheckFileType';
+import { useLocation } from 'react-router-dom';
 
 interface UploadedFile {
   id: string;
@@ -16,11 +17,12 @@ export default function FileUpload() {
   const [isDragging, setIsDragging] = useState(false);
   const [targetFormat, setTargetFormat] = useState<'png' | 'jpeg'>('png');
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const location = useLocation();
   const getFormatFileSize = (bytes: number) => {
     return formatFileSize(bytes);
   };
 
+console.log("XXXXXXXX",location?.state?.method.split("-")[0]);
 
 
 
@@ -98,12 +100,88 @@ export default function FileUpload() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
-    processFiles(droppedFiles);
+    
+    // Validate files before processing
+    const validFiles: File[] = [];
+    const invalidFiles: { name: string; error: string }[] = [];
+
+    droppedFiles.forEach((file) => {
+      const validation = isValidForConversion(file, targetFormat);
+      if (validation.valid) {
+        validFiles.push(file);
+      } else {
+        invalidFiles.push({
+          name: file.name,
+          error: validation.error || 'Invalid file',
+        });
+      }
+    });
+
+    // Show errors for invalid files
+    if (invalidFiles.length > 0) {
+      invalidFiles.forEach(({ name, error }) => {
+        setFiles((prev) => [
+          ...prev,
+          {
+            id: `${name}-${Date.now()}-${Math.random()}`,
+            file: new File([], name),
+            progress: 0,
+            status: 'error',
+            error,
+          },
+        ]);
+      });
+    }
+
+    // Process valid files
+    if (validFiles.length > 0) {
+      processFiles(validFiles);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.currentTarget.files ? Array.from(e.currentTarget.files) : [];
-    processFiles(selectedFiles);
+    let selectedFiles = e.currentTarget.files ? Array.from(e.currentTarget.files) : [];
+    
+    // Validate files before processing
+    const validFiles: File[] = [];
+    const invalidFiles: { name: string; error: string }[] = [];
+
+    selectedFiles.forEach((file) => {
+      const validation = isValidForConversion(file, targetFormat);
+      if (validation.valid) {
+        validFiles.push(file);
+      } else {
+        invalidFiles.push({
+          name: file.name,
+          error: validation.error || 'Invalid file',
+        });
+      }
+    });
+
+    // Show errors for invalid files
+    if (invalidFiles.length > 0) {
+      invalidFiles.forEach(({ name, error }) => {
+        setFiles((prev) => [
+          ...prev,
+          {
+            id: `${name}-${Date.now()}-${Math.random()}`,
+            file: new File([], name),
+            progress: 0,
+            status: 'error',
+            error,
+          },
+        ]);
+      });
+    }
+
+    // Process valid files
+    if (validFiles.length > 0) {
+      try {
+        processFiles(validFiles);
+      } catch (error) {
+        console.error('Error processing files:', error);
+      }
+    }
   };
 
   const processFiles = async (newFiles: File[]) => {
@@ -195,32 +273,7 @@ export default function FileUpload() {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Drag and Drop Area */}
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <span className="text-sm text-slate-300">Convert images to:</span>
-        <button
-          type="button"
-          onClick={() => setTargetFormat('png')}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            targetFormat === 'png'
-              ? 'bg-cyan-500 text-slate-950'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-          }`}
-        >
-          PNG
-        </button>
-        <button
-          type="button"
-          onClick={() => setTargetFormat('jpeg')}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            targetFormat === 'jpeg'
-              ? 'bg-cyan-500 text-slate-950'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-          }`}
-        >
-          JPG
-        </button>
-      </div>
-
+ 
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -238,7 +291,7 @@ export default function FileUpload() {
           multiple
           onChange={handleFileChange}
           className="hidden"
-          accept="*/*"
+          accept={targetFormat === 'png' ? '.jpg,.jpeg,.jpe' : '.png'}
         />
 
         <div className="flex flex-col items-center gap-4">
@@ -249,6 +302,9 @@ export default function FileUpload() {
             </p>
             <p className="text-sm text-slate-400 mt-2">
               or click to select files from your computer
+            </p>
+            <p className="text-xs text-cyan-300 mt-2">
+              {targetFormat === 'png' ? 'Only JPG/JPEG files' : 'Only PNG files'} accepted
             </p>
           </div>
         </div>

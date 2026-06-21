@@ -30,6 +30,39 @@ export const isAvifFile = (file: File) =>
 export const isHeicFile = (file: File) =>
   file.type === 'image/heic' || file.type === 'image/heif' || /\.hei[cf]$/i.test(file.name);
 
+// ─── File Validation ──────────────────────────────────────────────────────────
+
+export const isValidForConversion = (file: File, targetFormat: 'png' | 'jpeg'): { valid: boolean; error?: string } => {
+  // Check if it's a valid image type (not PDF, etc.)
+  const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|gif|webp|svg|bmp|tiff|ico|avif|heic|heif)$/i.test(file.name);
+  
+  if (!isImage) {
+    return { 
+      valid: false, 
+      error: `Invalid file type. Please upload image files only (JPG, PNG, etc.). ${file.name} is not a valid image format.` 
+    };
+  }
+
+  // Check if file type matches the conversion target
+  if (targetFormat === 'png') {
+    if (!isJpegFile(file)) {
+      return { 
+        valid: false, 
+        error: `Invalid file type for conversion. To convert to PNG, please select a JPG/JPEG file. Received: ${file.name}` 
+      };
+    }
+  } else if (targetFormat === 'jpeg') {
+    if (!isPngFile(file)) {
+      return { 
+        valid: false, 
+        error: `Invalid file type for conversion. To convert to JPEG, please select a PNG file. Received: ${file.name}` 
+      };
+    }
+  }
+
+  return { valid: true };
+};
+
 // ─── Video ────────────────────────────────────────────────────────────────────
 
 export const isMp4File = (file: File) =>
