@@ -300,4 +300,3 @@ For issues, questions, or suggestions:
 
 ---
 
-**Made with ❤️ by the TransMute Team**
